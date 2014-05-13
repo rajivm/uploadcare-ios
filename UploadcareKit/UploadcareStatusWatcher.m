@@ -49,7 +49,6 @@ static const NSTimeInterval UCSWPollRate = 1. / 4;
         
         /* pusher */
         _pusher = [self.class sharedPusher];
-        _pusher.reconnectAutomatically = YES;
         _pusher.reconnectDelay = .5; // default = 5
         PTPusherChannel *channel = [_pusher subscribeToChannelNamed:[NSString stringWithFormat:@"task-status-%@", _token]];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceivePusherEvent:) name:PTPusherEventReceivedNotification object:channel];
