@@ -12,6 +12,5 @@ Pod::Spec.new do |s|
   s.platform     = :ios, '5.0'
   s.frameworks   = 'AssetsLibrary', 'ImageIO'
   s.dependency 'AFNetworking', '~> 1.3.0'
-  s.dependency 'AQGridView', '~> 1.3'
   s.dependency 'libPusher', '~> 1.4'
 end
