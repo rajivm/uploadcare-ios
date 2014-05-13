@@ -11,6 +11,7 @@
 #import "UploadcareKit.h"
 #import "UCRecentUploads.h"
 
+#import "MobileCoreServices/UTCoreTypes.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <ImageIO/ImageIO.h>
 
