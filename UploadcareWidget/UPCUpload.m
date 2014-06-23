@@ -9,7 +9,6 @@
 #import "UPCUpload.h"
 #import "UPCUpload_Private.h"
 #import "UploadcareKit.h"
-#import "UCRecentUploads.h"
 
 #import "MobileCoreServices/UTCoreTypes.h"
 #import <AssetsLibrary/AssetsLibrary.h>
@@ -122,13 +121,11 @@
             
         } successBlock:^(NSString *fileId) {
             
-            [UCRecentUploads recordUploadWithInfo:@{UCRecentUploadsURLKey:assetURL.absoluteString, UCRecentUploadsSourceTypeKey:@"Library"}];
             
             if ([delegate respondsToSelector:@selector(uploadDidFinish:destinationFileId:)]) [delegate uploadDidFinish:upload destinationFileId:fileId];
 
         } failureBlock:^(NSError *error) {
             
-            [UCRecentUploads recordUploadWithInfo:@{UCRecentUploadsURLKey:assetURL.absoluteString, UCRecentUploadsSourceTypeKey:@"Library", UCRecentUploadsErrorKey:error}];
             
             if ([delegate respondsToSelector:@selector(upload:didFailWithError:)]) [delegate upload:upload didFailWithError:error];
             
@@ -165,18 +162,12 @@
         if ([delegate respondsToSelector:@selector(upload:didTransferTotalBytes:expectedTotalBytes:)]) [delegate upload:upload didTransferTotalBytes:bytesDone expectedTotalBytes:bytesTotal];
         
     } successBlock:^(NSString *fileId) {
-        
-        /* remember the upload */
-        [UCRecentUploads recordUploadWithInfo:@{UCRecentUploadsURLKey:remoteURL.absoluteString, UCRecentUploadsThumbnailURLKey:thumbnailURL ? thumbnailURL.absoluteString : @"", UCRecentUploadsTitleKey:title?title:@"", UCRecentUploadsSourceTypeKey:sourceName}];
-        
+                
         /* notify the delegate */
         if ([delegate respondsToSelector:@selector(uploadDidFinish:destinationFileId:)]) [delegate uploadDidFinish:upload destinationFileId:fileId];
         
     } failureBlock:^(NSError *error) {
-        
-        /* remember the failure */
-        [UCRecentUploads recordUploadWithInfo:@{UCRecentUploadsURLKey:remoteURL.absoluteString, UCRecentUploadsThumbnailURLKey:thumbnailURL ? thumbnailURL.absoluteString : @"", UCRecentUploadsTitleKey:title?title:@"", UCRecentUploadsSourceTypeKey:sourceName}];
-        
+                
         /* notify the delegate */
         if ([delegate respondsToSelector:@selector(upload:didFailWithError:)]) [delegate upload:upload didFailWithError:error];
         
